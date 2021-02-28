@@ -6,12 +6,7 @@ import { render, unmountComponentAtNode } from 'react-dom'
 import { Numbers } from './components/numbers/numbers'
 
 
-const AppView: React.FC = () =>
-  <>
-    <Numbers />
-  </>
-
-
+const AppView: React.FC = () => <Numbers />
 const App = AppView
 
 const root = document.createElement('div')

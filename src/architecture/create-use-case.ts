@@ -32,13 +32,12 @@ export function createUseCase<SideEffects, T>(
   useCaseCallback: UseCaseCallback<SideEffects, T>,
   options?: Options,
 ) {
-  const { intent } = options || {};
   const useCaseAndIntent = {
     useCase: (sideEffects: SideEffects) =>
       useCaseCallback(
         dispatcher
           .pipe(
-            intent
+            options?.intent
               ? filter((intent: Intent) => intent.type === name)
               : identity,
             process.env.NODE_ENV === 'development'
@@ -49,7 +48,7 @@ export function createUseCase<SideEffects, T>(
       )
         .subscribe(),
 
-      intent: intent ? createIntent<T>(name, dispatch) : undefined
+      intent: options?.intent ? createIntent<T>(name, dispatch) : undefined
   } as { useCase: UseCase<SideEffects, T>; intent: (payload: T) => void }
 
   return useCaseAndIntent

@@ -23,7 +23,7 @@ export const createLogger = <T = { [key: string]: Observable<any> }>(
   stateUpdaters: Observable<{ name: string, byUseCase: string, payload?: any }>,
   useCases: Observable<{ name: string, payload?: any }>,
   stateMap: T & { [key: string]: Observable<any> },
-  options: { log?: boolean } = {}
+  options?: { log?: boolean }
 ) => {
 
   const stateNames = Object.keys(stateMap)
@@ -66,7 +66,7 @@ export const createLogger = <T = { [key: string]: Observable<any> }>(
           currentState
         )
       ),
-      options.log
+      options?.log
         ? tap(
           ([[[lastChangedStateName], currentState], updater]) => {
             console.group(`[STATE] ${lastChangedStateName}`)
@@ -91,7 +91,7 @@ export const createLogger = <T = { [key: string]: Observable<any> }>(
           currentState
         )
       ),
-      options.log
+      options?.log
         ? tap(
           ([intent, currentState]) => {
             console.group(`[INTENT] ${intent.type}`)
@@ -112,7 +112,7 @@ export const createLogger = <T = { [key: string]: Observable<any> }>(
         currentState
       )
     ),
-    options.log
+    options?.log
       ? tap(
         ([{ name, payload }]) => {
           console.group(`[USE_CASE] ${name}`)
